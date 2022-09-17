@@ -1,13 +1,20 @@
 import tensorflow as tf
 import numpy as np
 
+print(tf.config.list_physical_devices('GPU'))
+
 # Definimos los datos para el entrenamiento
 celsius = np.array([-40,-10,0,8,15,22,38], dtype=float)
 fahrenheit = np.array([-40,14,32,46,59,72,100], dtype=float)
 
 # Tenemos el número de capas y el modelo a utilizar
-capa = tf.keras.layers.Dense(units=1, input_shape=[1])
-modelo = tf.keras.Sequential([capa])
+#capa = tf.keras.layers.Dense(units=1, input_shape=[1])
+#modelo = tf.keras.Sequential([capa])
+oculta1 = tf.keras.layers.Dense(units = 3,input_shape = [1])
+oculta2 = tf.keras.layers.Dense(units = 3)
+salida = tf.keras.layers.Dense(units = 1)
+modelo = tf.keras.Sequential([oculta1, oculta2, salida])
+
 
 # Compilamos el modelo y definimos el modelo de optimización y la función de costo o perdida
 modelo.compile(
@@ -33,4 +40,7 @@ print("El resultado es "+str(resultado)+"fahrenheit!")
 
 # Obtenemos los valores internos de la red
 print("Variables internas del modelo")
-print(capa.get_weights())
+#print(capa.get_weights())
+print(oculta1.get_weights())
+print(oculta2.get_weights())
+print(salida.get_weights())
