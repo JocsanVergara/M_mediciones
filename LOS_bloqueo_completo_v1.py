@@ -15,9 +15,9 @@ def find_port(identf):
         if identf in str(port.hwid):
             return port.name
 
-def adquisicion_datos(nombre_archivo,iteraciones,Puerto,tag,campo_vision,altura_ant,dxy_en_cm,dz_en_cm):
+def adquisicion_datos(nombre_archivo,iteraciones,Puerto,tag,campo_vision,altura_ant,dxy_en_cm,dz_en_cm,variacion_mediciones):
     #cantidad = iteraciones                              #No es necesaria pero podría darse el caso de que yo determine el número de iteraciones que quiero usar y me sería más facil cambiar un valor en la función directamente
-    campos = ['Hora','Antena','iden.Tag','RSSI_1','Ang.Azimuth','Ang.Elevacion','RSSI_2','Canal','Linea de visión libre(si=1, no=0)','altura de la antena, respecto del nivel del suelo','Distancia entre antena con el tag en cm','Distancia entre el suelo con el tag en cm']
+    campos = ['Hora','Antena','iden.Tag','RSSI_1','Ang.Azimuth','Ang.Elevacion','RSSI_2','Canal','Linea de visión libre(si=1, no=0)','altura de la antena, respecto del nivel del suelo','Distancia entre antena con el tag en cm','Distancia entre el suelo con el tag en cm','Existe un error en la medición']
 
     if not pathlib.Path(nombre_archivo).exists():
         with open(nombre_archivo,'w',newline='') as archivo_csv:
@@ -61,14 +61,16 @@ def adquisicion_datos(nombre_archivo,iteraciones,Puerto,tag,campo_vision,altura_
                                 'Linea de visión libre(si=1, no=0)':campo_vision,
                                 'altura de la antena, respecto del nivel del suelo': altura_ant,
                                 'Distancia entre antena con el tag en cm': dxy_en_cm,
-                                'Distancia entre el suelo con el tag en cm': dz_en_cm})
+                                'Distancia entre el suelo con el tag en cm': dz_en_cm,
+                                'Existe un error en la medición': variacion_mediciones})
                     contador = contador + 1    
                 except: 
                     pass     
             else:
                 print("Dato recibido de forma incorrecta")
-            
-n = 20  #Numero de iteraciones
+
+cte_conv = 2*60            
+n =  cte_conv * 2 #Numero de iteraciones por minutos de captura (2min)
 #Nombre de las antenas y los tag
 ant_1 = 'PID=0403:6015 SER=D200C017A'
 ant_2 = 'PID=0403:6015 SER=D200BZVHA'
@@ -76,23 +78,35 @@ tag_1 = ":CCF957966AC9"
 tag_2 = ":CCF957966B2C"
 
 #Solicitamos los datos importantes para almacenarlos en la base de datos
-campo_vision = int(input('Linea de visión, ¿está libre de objetos? (no = 0 y si = 1):  '))
-altura_ant = int(input('Ingresa la altura a la que se encuentra la antena:  '))
+#campo_vision = int(input('Linea de visión, ¿está libre de objetos? (no = 0 y si = 1):  '))
+campo_vision = 0
+#altura_ant = int(input('Ingresa la altura a la que se encuentra la antena en cm:  '))
+altura_ant = 134
 dxy_en_cm = int(input('Ingresa la distancia entre la antena y el tag en cm:  '))
-dz_en_cm = int(input('Ingresa la áltura a la que se encuentra el tag:  '))
+#dz_en_cm = int(input('Ingresa la áltura a la que se encuentra el tag en cm:  '))
+dz_en_cm = 130
+
+#if campo_vision == 1:
+#    variacion_mediciones = 0
+#else:
+#    variacion_mediciones = 1
+variacion_mediciones = 1
+
 os.system('cls')
 
 print('~'*50)       
 U_Blox = serial.Serial(str(find_port(ant_2)),115200,timeout=2,write_timeout=1)
 print(U_Blox)
+posicion =  '_'+ str(altura_ant) + '_' + str(dxy_en_cm) + '_' + str(dz_en_cm)
 
 for num in range(2):
     #Datos
     named_tuple = time.localtime()
     time_string = time.strftime("%Y%m%d_%H%M%S",named_tuple)
-    archivo = time_string + '.csv'
-    archivo = 'Base_datos//' + archivo
-    adquisicion_datos(archivo,n,U_Blox,tag_2,campo_vision,altura_ant,dxy_en_cm,dz_en_cm)
+    archivo = time_string + posicion +'.csv'
+    archivo = 'Base_datos//LOS_completo//' + archivo
+
+    adquisicion_datos(archivo,n,U_Blox,tag_2,campo_vision,altura_ant,dxy_en_cm,dz_en_cm,variacion_mediciones)
     print("Número de iteraciones: ",num)
 
 U_Blox.close()
