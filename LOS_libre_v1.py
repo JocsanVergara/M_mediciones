@@ -84,7 +84,7 @@ campo_vision = 1
 altura_ant = 134
 dxy_en_cm = int(input('Ingresa la distancia entre la antena y el tag en cm:  '))
 #dz_en_cm = int(input('Ingresa la áltura a la que se encuentra el tag en cm:  '))
-dz_en_cm = 130
+dz_en_cm = 100
 #if campo_vision == 1:
 #    variacion_mediciones = 0
 #else:
