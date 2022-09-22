@@ -1,4 +1,4 @@
-Hora,Antena,iden.Tag,RSSI_1,Ang.Azimuth,Ang.Elevacion,RSSI_2,Canal,"Linea de visión libre(si=1, no=0)","altura de la antena, respecto del nivel del suelo",Distancia entre antena con el tag en cm,Distancia entre el suelo con el tag en cm,Existe un error en la medición
+Hora,Antena,iden.Tag,RSSI_1,Ang.Azimuth,Ang.Elevacion,RSSI_2,Canal,"Linea de visiï¿½n libre(si=1, no=0)","altura de la antena, respecto del nivel del suelo",Distancia entre antena con el tag en cm,Distancia entre el suelo con el tag en cm,Existe un error en la mediciï¿½n
 2022/09/20/ 22:01:11,+UUDF:CCF957966B2C,:CCF957966B2C,-70,12,-5,0,38,0,134,170,100,1
 2022/09/20/ 22:01:11,+UUDF:CCF957966B2C,:CCF957966B2C,-70,12,-31,0,37,0,134,170,100,1
 2022/09/20/ 22:01:12,+UUDF:CCF957966B2C,:CCF957966B2C,-69,12,0,0,39,0,134,170,100,1
@@ -168,8 +168,7 @@ Hora,Antena,iden.Tag,RSSI_1,Ang.Azimuth,Ang.Elevacion,RSSI_2,Canal,"Linea de vis
 2022/09/20/ 22:02:34,+UUDF:CCF957966B2C,:CCF957966B2C,-67,10,-34,0,38,0,134,170,100,1
 2022/09/20/ 22:02:35,+UUDF:CCF957966B2C,:CCF957966B2C,-72,10,-34,0,39,0,134,170,100,1
 2022/09/20/ 22:02:35,+UUDF:CCF957966B2C,:CCF957966B2C,-67,10,-34,0,38,0,134,170,100,1
-2022/09/20/ 22:02:36,+UUDF:CCF957966B2C,:CCF957966B2C,-72,10,-34,0,"
-",0,134,170,100,1
+2022/09/20/ 22:02:36,+UUDF:CCF957966B2C,:CCF957966B2C,-72,10,-34,0,37,0,134,170,100,1
 2022/09/20/ 22:02:36,+UUDF:CCF957966B2C,:CCF957966B2C,-66,10,-35,0,38,0,134,170,100,1
 2022/09/20/ 22:02:37,+UUDF:CCF957966B2C,:CCF957966B2C,-76,10,-35,0,39,0,134,170,100,1
 2022/09/20/ 22:02:37,+UUDF:CCF957966B2C,:CCF957966B2C,-72,10,-35,0,37,0,134,170,100,1
