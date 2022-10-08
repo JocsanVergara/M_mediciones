@@ -67,8 +67,9 @@ def adquisicion_datos(nombre_archivo,iteraciones,Puerto,tag,campo_vision,altura_
                     pass     
             else:
                 print("Dato recibido de forma incorrecta")
-            
-n = 20  #Numero de iteraciones
+
+cte_conv = 2*60            
+n =  cte_conv * 5 #Numero de iteraciones por minutos de captura (5min)
 #Nombre de las antenas y los tag
 ant_1 = 'PID=0403:6015 SER=D200C017A'
 ant_2 = 'PID=0403:6015 SER=D200BZVHA'
@@ -77,9 +78,9 @@ tag_2 = ":CCF957966B2C"
 
 #Solicitamos los datos importantes para almacenarlos en la base de datos
 campo_vision = int(input('Linea de visión, ¿está libre de objetos? (no = 0 y si = 1):  '))
-altura_ant = int(input('Ingresa la altura a la que se encuentra la antena:  '))
+altura_ant = int(input('Ingresa la altura a la que se encuentra la antena en cm:  '))
 dxy_en_cm = int(input('Ingresa la distancia entre la antena y el tag en cm:  '))
-dz_en_cm = int(input('Ingresa la áltura a la que se encuentra el tag:  '))
+dz_en_cm = int(input('Ingresa la áltura a la que se encuentra el tag en cm:  '))
 os.system('cls')
 
 print('~'*50)       
@@ -91,7 +92,8 @@ for num in range(2):
     named_tuple = time.localtime()
     time_string = time.strftime("%Y%m%d_%H%M%S",named_tuple)
     archivo = time_string + '.csv'
-    archivo = 'Base_datos//' + archivo
+    archivo = 'Base_datos//LOS_libre' + archivo
+
     adquisicion_datos(archivo,n,U_Blox,tag_2,campo_vision,altura_ant,dxy_en_cm,dz_en_cm)
     print("Número de iteraciones: ",num)
 

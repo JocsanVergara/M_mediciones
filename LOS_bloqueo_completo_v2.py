@@ -97,7 +97,7 @@ variacion_mediciones = 1
 os.system('cls')
 
 print('~'*50)       
-U_Blox = serial.Serial(str(find_port(ant_2)),115200,timeout = 0)#,timeout=0.2,write_timeout=0.2)
+U_Blox = serial.Serial(str(find_port(ant_2)),115200)#,timeout=0.2,write_timeout=0.2)
 print(U_Blox)
 posicion =  '_'+ str(altura_ant) + '_' + str(dxy_en_cm) + '_' + str(dz_en_cm)
 
