@@ -1,0 +1,5 @@
+20 de Octubre del 2022
+	Jocsan Vergara
+Se movieron desde la Raiz (M_mediciones) hasta M_mediciones/Rec_datos
+- union_csv.ipynb
+- Union_CSV.py

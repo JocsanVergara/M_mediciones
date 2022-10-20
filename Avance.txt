@@ -1,0 +1,24 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Notas de avance:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1) Se hizo la recolección de los datos necesarios para el entrenamiento
+2) Se documento buena parte de lo realizado para poder generar una red convolucional
+2) Se creo la red neuronal convolucional y detecta con % si existe un objeto que se cruce entre la antena y el tag.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Durante esta semana se espera poder crear una base de datos capaz de recibir los datos desde dos raspberry, además se verá la posibilidad de añadir la posición GPS dentro de los datos que envien para tener una referencia de la posición de las antenas.
+Para ello se necesita
+- Implementar una base de datos.
+"De momento aun estoy con la duda de si implementar una que sea MySQL o no-MySQL, la ventaja de implementar una MYSQL además de complicarme un poco la existencia con correlaciones es de que aprendería bastante, además de que entre los datos existe una relación respectiva entre la antena que reciben los datos y el tag, pero implementar una no-MySQL me ayudaría a levantar rápido un servidor y ver cualquier problema sobre la marcha, no obstante necesito documentarme más todavia"
+- Poner al día las Raspberry.
+"Estuve instalando muchas aplicaciones y moviendo bastante configuración, necesito corregir unas cosas que hice y además olvide la contraseña de una u.u"
+- Hacer las correcciones en el programa de recolección de datos.
+"Ya probe en ambas plataformas (Windows y Ubuntu) que la recolección de datos funciona pero me gustaría que uniformar el programa y que sea capáz de detectar independiente del sistema operativo a que antena conectarse, no obstante tambien está la opcción de dejarlo solo para ubuntu como se espera que ellas sean las responsables de recolectar los datos"
+- Conexiones entre el ordenador principal y las Raspberry.
+"Establecer la conexion entre la base de datos y las Rasberry"
+- Ver la forma de que las Raspberry nos entreguen su posición o si es necesario darselas
+"Como quieron entregarle la posición GPS sería una buena idea tener esta opcción, el problema es que igual va en contra de los que se establecio originalmente, además necesito determinar la posición en función de que -> internet?? ->añadir nuevo hardware???-> y si algo otra cosas"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Nota: aun estoy algo perdido pero quiero demostrar que se puede u.u solo necesito tiempo y tal vez no lo tenga
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,0 +1,10 @@
+20 de Octubre del 2022
+	Jocsan Vergara
+Se movieron desde la Raiz (M_mediciones) hasta M_mediciones/Rec_datos
+- LOS_bloqueo_completo_v1.py
+- LOS_bloqueo_completo_v2.py
+- LOS_bloqueo_completo_v3.py
+- LOS_bloqueo_parcial_v1.py
+- LOS_libre_v1.py
+- LOS_libre_v2.py
+- LOS_libre_v3.py
