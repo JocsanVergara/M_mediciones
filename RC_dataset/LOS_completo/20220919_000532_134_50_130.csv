@@ -1,4 +1,4 @@
-Hora,Antena,iden.Tag,RSSI_1,Ang.Azimuth,Ang.Elevacion,RSSI_2,Canal,"Linea de visión libre(si=1, no=0)","altura de la antena, respecto del nivel del suelo",Distancia entre antena con el tag en cm,Distancia entre el suelo con el tag en cm,Existe un error en la medición
+Hora,Antena,iden.Tag,RSSI_1,Ang.Azimuth,Ang.Elevacion,RSSI_2,Canal,"Linea de visiï¿½n libre(si=1, no=0)","altura de la antena, respecto del nivel del suelo",Distancia entre antena con el tag en cm,Distancia entre el suelo con el tag en cm,Existe un error en la mediciï¿½n
 2022/09/19/ 00:05:33,+UUDF:CCF957966B2C,:CCF957966B2C,-70,-3,-19,0,38,0,134,50,130,1
 2022/09/19/ 00:05:33,+UUDF:CCF957966B2C,:CCF957966B2C,-58,-3,-15,0,39,0,134,50,130,1
 2022/09/19/ 00:05:34,+UUDF:CCF957966B2C,:CCF957966B2C,-72,-3,-19,0,37,0,134,50,130,1
