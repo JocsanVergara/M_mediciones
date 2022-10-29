@@ -1,3 +1,15 @@
+# Para que funcione en las Raspberry debo instalar
+# pip install pyserial
+
+# Además es necesario habilitar los puertos usb para poder recoger los datos
+# his is actually a permission problem u have to allow your Arduino IDE to access the specified port just simply type following commands in your terminal
+#sudo su
+#//type your password
+#cd /
+#cd dev
+#chown username ttyUSB0
+
+
 import serial
 import serial.tools.list_ports
 import os
@@ -111,7 +123,7 @@ for num in range(2):
     archivo = time_string + posicion +'.csv'
     archivo = 'N_dataset//LOS_completo//' + archivo
 
-    adquisicion_datos(archivo,n,ant_2,U_Blox,tag_2,campo_vision,altura_ant,dxy_en_cm,dz_en_cm,variacion_mediciones)
+    adquisicion_datos(archivo,n,ant_2,U_Blox,tag_1,campo_vision,altura_ant,dxy_en_cm,dz_en_cm,variacion_mediciones)
     print("Número de iteraciones: ",num)
 
 U_Blox.close()
