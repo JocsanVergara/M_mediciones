@@ -8,7 +8,8 @@ from flask_cors import CORS
 
 # Conexión con el servidor de mongo, la base de datos ServerMemory   :27017
 app = Flask(__name__)
-app.config['MONGO_URI'] = 'mongodb://localhost:27017/ServerMemory'
+#app.config['MONGO_URI'] = 'mongodb://localhost:27017/ServerMemory'
+app.config['MONGO_URI'] = 'mongodb://192.168.0.100:27016/ServerMemory'
 mongo = PyMongo(app)
 
 # para evitar conflictos con el servidor de REACT usamos CORS
