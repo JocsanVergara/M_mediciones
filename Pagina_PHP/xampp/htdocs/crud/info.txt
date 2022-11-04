@@ -1,0 +1,27 @@
+use memory_test;
+
+db.data.insert({
+    "hora":"2022/09/17/ 16:09:20",
+    "Iden_tag":":CCF957966B2C",
+    "RSSI":"-60",
+    "Ang_azimuth":"-9",
+    "Ang_elevacion":"-12",
+    "Canal":"37",
+    "LOS":"1.0",
+    "Altura_ant":"134",
+    "Distancia_entre_ant_tag":"30",
+    "Altura_tag":"130"
+});
+
+db.createUser(
+  {
+    user :  "adminpoxan",
+    pwd :  "123456",
+    roles :  [
+        {  role :  "readWrite",  db :  "memory_test"  }
+    ]
+  }
+);
+
+mongo -u  adminpoxan -p 123456 --authenticationDatabase memory_test
+

@@ -1,0 +1,2 @@
+Pagina PHP con las funciones basicas de CRUD y MongoDB
+Estos archivos deben guardarse en una carpeta de Xampp para poder ejecutar en la red local
