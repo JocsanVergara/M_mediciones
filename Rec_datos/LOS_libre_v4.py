@@ -6,6 +6,8 @@ import pathlib
 import time
 import requests
 
+# sudo chmod 666 /dev/ttyUSB0
+
 def find_port(identf):
     """
         Esta función busca determinar el puerto serial que vamos a utilizar,
