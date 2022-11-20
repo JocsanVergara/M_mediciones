@@ -1,0 +1,8 @@
+{
+    "Antena_1":"PID=0403:6015 SER=D200C017A",
+    "Antena_2":"PID=0403:6015 SER=D200BZVHA",
+    "tag_1":":CCF957966AC9",
+    "tag_2":":CCF957966B2C",
+    "Ant_ubuntu":"/dev/ttyUSB0"
+}
+

@@ -1,0 +1,16 @@
+{
+    "hora":"",
+    "Id_tag":"",
+    "Id_ant":"",
+    "RSSI":"",
+    "Ang_azimuth":"",
+    "Ang_elevacion":"",
+    "Canal":"",
+    "Altura_ant":"",
+    "Distancia_ant_tag":"",
+    "LOS":"",
+    "Distancia_corregida":"",
+    "Latitud":"",
+    "Longitud":"",
+    "Dato_completo":""
+}
