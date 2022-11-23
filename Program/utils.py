@@ -3,7 +3,13 @@ import serial.tools.list_ports
 import requests
 import os
 import time
+import math
+import servidor_mongo as SM
+from bson.objectid import ObjectId
 
+base_de_datos = SM.obtener_bd()
+
+# Comando necesario para habilitar la lectura del puerto USB en ubuntu
 # sudo chmod 666 /dev/ttyUSB0
 
 def find_port(identf):
@@ -16,163 +22,6 @@ def find_port(identf):
         if identf in str(port.hwid):
             return port.name
 
-def enviar_datos_php_test(hora,I_t,RSSI,A_a,A_e,canal,LOS,a_a,d_a,A_t):
-    print("ingresaste a la funcion php")
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'}
-    
-    auth_data = {
-        'hora':hora,
-        'Iden_tag':I_t,
-        'RSSI':RSSI,
-        'Ang_azimuth':A_a,
-        'Ang_elevacion':A_e,
-        'Canal':canal,
-        'LOS':LOS,
-        'Altura_ant':a_a,
-        'Distancia_entre_ant_tag':d_a,
-        'Altura_tag':A_t}
-
-    resp = requests.post('http://192.168.0.100/crud/procesos/insertar.php',data=auth_data)
-    print("dato enviado por php")
-    resp
-
-def adquisicion_datos_php_test(iteraciones,Antena,Puerto,tag,campo_vision,altura_ant,dxy_en_cm,dz_en_cm,variacion_mediciones):
-    
-    campos = ['Hora','Antena','Iden_tag','RSSI','Ang_azimuth','Ang_elevacion','RSSI_2','Canal','LOS(si=1,no=0)','Altura_ant(cm)','Distancia_entre_ant_tag(cm)','Altura_tag(cm)','Error_dato_medido']
-
-    while(contador<iteraciones):
-        os.system('cls')
-        print("Guardando dato número: ",contador)
-
-        # La hora
-        time_string = time.strftime("%Y/%m/%d/ %H:%M:%S",time.localtime())
-
-        # Recolectando los datos
-        line = Puerto.readline().decode('utf-8')
-        print(line)
-        if tag in line:
-            x = line.split(",")
-            try: 
-                #Identificador = str(x[0])
-                RSSI_1p = int(x[1])
-                Azimuth_angle = int(x[2])
-                Elevation_angle = int(x[3])
-                RSSI_2p = int(x[4])
-                Adv_Channel = str(x[5])
-                Adv_Channel = int(Adv_Channel)
-                print("Dato recibido correctamente")
-                    
-                contador = contador + 1    
-                enviar_datos_php(time_string,tag,RSSI_1p,Azimuth_angle,Elevation_angle,Adv_Channel,campo_vision,altura_ant,dxy_en_cm,dz_en_cm)
-            except: 
-                pass     
-        else:
-            print("Dato recibido de forma incorrecta")
-
-def enviar_datos_php(hora,I_t,RSSI,A_a,A_e,canal,LOS,a_a,d_a,A_t,ant):
-    print("ingresaste a la funcion php")
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'}
-    
-    auth_data = {
-        'hora':hora,
-        'Iden_tag':I_t,
-        'RSSI':RSSI,
-        'Ang_azimuth':A_a,
-        'Ang_elevacion':A_e,
-        'Canal':canal,
-        'LOS':LOS,
-        'Altura_ant':a_a,
-        'Distancia_entre_ant_tag':d_a,
-        'Altura_tag':A_t,
-        'Antena':ant}
-
-    resp = requests.post('http://192.168.0.100/crud/procesos/insertar.php',data=auth_data)
-    print("dato enviado por php")
-    resp
-
-def adquisicion_datos_php(iteraciones,Antena,Puerto,tag,campo_vision,altura_ant,dxy_en_cm,dz_en_cm):
-
-    while(contador<iteraciones):
-        # La hora
-        time_string = time.strftime("%Y/%m/%d/ %H:%M:%S",time.localtime())
-
-        # Recolectando los datos
-        line = Puerto.readline().decode('utf-8')
-        print(line)
-        if tag in line:
-            x = line.split(",")
-            try: 
-                #Identificador = str(x[0])
-                RSSI_1p = int(x[1])
-                Azimuth_angle = int(x[2])
-                Elevation_angle = int(x[3])
-                RSSI_2p = int(x[4])
-                Adv_Channel = str(x[5])
-                Adv_Channel = int(Adv_Channel)
-                print("Dato recibido correctamente")
-                    
-                contador = contador + 1
-                print("enviando dato")    
-                enviar_datos_php(time_string,tag,RSSI_1p,Azimuth_angle,Elevation_angle,Adv_Channel,campo_vision,altura_ant,dxy_en_cm,dz_en_cm,Antena)
-                print("dato enviado")
-            except: 
-                pass     
-        else:
-            print("Dato recibido de forma incorrecta")
-
-def adquisicion_datos_test(iteraciones,Antena,Puerto,tag_1,tag_2):
-    contador = 0
-    tag_actual = ''
-
-    while(contador<iteraciones):
-        #os.system('cls')
-        # La hora
-        time_string = time.strftime("%Y/%m/%d/ %H:%M:%S",time.localtime())
-
-        # Recolectando los datos
-        line = Puerto.readline().decode('utf-8')
-
-        if tag_1 in line:
-            x1 = line.split(",")
-            try: 
-                #Identificador = str(x[0])
-                RSSI_1p_1 = int(x1[1])
-                Azimuth_angle_1 = int(x1[2])
-                Elevation_angle_1 = int(x1[3])
-                RSSI_2p_1 = int(x1[4])
-                Adv_Channel_1 = str(x1[5])
-                Adv_Channel_1 = int(Adv_Channel_1)
-                
-                if(tag_actual!=tag_1):
-                    print("Dato recibido correctamente")
-                    print("RSSI:",RSSI_1p_1," ,A_a:",Azimuth_angle_1," ,A_e:",Elevation_angle_1," ,Canal",Adv_Channel_1, " ,Antena:",Antena," ,tag:",tag_1)
-                    contador = contador + 1
-            except: 
-                pass  
-
-        elif tag_2 in line:
-            x2 = line.split(",")
-            try: 
-                #Identificador = str(x[0])
-                RSSI_1p_2 = int(x2[1])
-                Azimuth_angle_2 = int(x2[2])
-                Elevation_angle_2 = int(x2[3])
-                RSSI_2p_2 = int(x2[4])
-                Adv_Channel_2 = str(x2[5])
-                Adv_Channel_2 = int(Adv_Channel_2)
-                
-                if(tag_actual!=tag_2):
-                    print("Dato recibido correctamente")
-                    print("RSSI:",RSSI_1p_2," ,A_a:",Azimuth_angle_2," ,A_e:",Elevation_angle_2," ,Canal",Adv_Channel_2, " ,Antena:",Antena," ,tag:",tag_2)
-                    contador = contador + 1
-            except: 
-                pass  
-        
-        else:
-            print("Dato recibido de forma incorrecta")
-        
 ###-------------------------------------------------------------------------------------------------------------###
 
 def enviar_php_datos_ant(hora,Id_tag,Id_ant,RSSI,A_a,A_e,canal,a_a):
@@ -202,9 +51,6 @@ def adquisicion_datos(iteraciones,Antena,Puerto,tag_1,tag_2,Alt_ant):
     time_string = time.strftime("%Y/%m/%d/ %H:%M:%S",time.localtime())
 
     while(contador<iteraciones):
-        print("Estoy en el while")
-        #os.system('cls')
-        
 
         # Recolectando los datos
         line = Puerto.readline().decode('utf-8')
@@ -217,16 +63,17 @@ def adquisicion_datos(iteraciones,Antena,Puerto,tag_1,tag_2,Alt_ant):
                 RSSI_1p_1 = int(x1[1])
                 Azimuth_angle_1 = int(x1[2])
                 Elevation_angle_1 = int(x1[3])
-                RSSI_2p_1 = int(x1[4])
+                #RSSI_2p_1 = int(x1[4])
                 Adv_Channel_1 = str(x1[5])
                 Adv_Channel_1 = int(Adv_Channel_1)
                 
                 if(tag_actual!=tag_1):
-                    print("Dato recibido correctamente")
-                    print("RSSI:",RSSI_1p_1," ,A_a:",Azimuth_angle_1," ,A_e:",Elevation_angle_1," ,Canal",Adv_Channel_1, " ,Antena:",Antena," ,tag:",tag_1)
+                    #print("Dato recibido correctamente")
+                    #print("RSSI:",RSSI_1p_1," ,A_a:",Azimuth_angle_1," ,A_e:",Elevation_angle_1," ,Canal",Adv_Channel_1, " ,Antena:",Antena," ,tag:",tag_1)
                     enviar_php_datos_ant(time_string,tag_1,Antena,RSSI_1p_1,Azimuth_angle_1,Elevation_angle_1,Adv_Channel_1,Alt_ant)
                     time.sleep(0.1)
                     contador = contador + 1
+                    tag_actual = tag_1
             except: 
                 pass  
 
@@ -238,18 +85,110 @@ def adquisicion_datos(iteraciones,Antena,Puerto,tag_1,tag_2,Alt_ant):
                 RSSI_1p_2 = int(x2[1])
                 Azimuth_angle_2 = int(x2[2])
                 Elevation_angle_2 = int(x2[3])
-                RSSI_2p_2 = int(x2[4])
+                #RSSI_2p_2 = int(x2[4])
                 Adv_Channel_2 = str(x2[5])
                 Adv_Channel_2 = int(Adv_Channel_2)
                 
                 if(tag_actual!=tag_2):
-                    print("Dato recibido correctamente")
-                    print("RSSI:",RSSI_1p_2," ,A_a:",Azimuth_angle_2," ,A_e:",Elevation_angle_2," ,Canal",Adv_Channel_2, " ,Antena:",Antena," ,tag:",tag_2)
+                    #print("Dato recibido correctamente")
+                    #print("RSSI:",RSSI_1p_2," ,A_a:",Azimuth_angle_2," ,A_e:",Elevation_angle_2," ,Canal",Adv_Channel_2, " ,Antena:",Antena," ,tag:",tag_2)
                     enviar_php_datos_ant(time_string,tag_2,Antena,RSSI_1p_2,Azimuth_angle_2,Elevation_angle_2,Adv_Channel_2,Alt_ant)
                     time.sleep(0.1)
                     contador = contador + 1
+                    tag_actual = tag_2
             except: 
                 pass  
         
         else:
             print("Dato recibido de forma incorrecta")
+
+###-------------------------------------------------------------------------------------------------------------###
+
+def CalculoAngulo(ang_11,ang_22):
+    """
+        Calculamos ambos ángulo formado entre las dos antenas y el tag
+    """
+    ang_1 = float(ang_11)
+    ang_2 = float(ang_22)
+
+    Alfa = 0.0
+    Beta = 0.0
+    if ang_1 > 0.0:
+        #Caso 1: Ángulo 1 positivo y Ángulo 2 negativo
+        if ang_2 < 0.0:
+            Alfa = 90.0 - ang_1
+            Beta = 90.0 + ang_2
+            return Alfa,Beta
+        #Caso 2:
+        elif ang_2 > 0.0:
+            Alfa = 90.0 - ang_1
+            Beta = 90.0 + ang_2
+            return Alfa,Beta
+        #Caso 3:    
+        elif ang_2 == 0.0:
+            Alfa = 90.0 - ang_1
+            Beta = 90.0
+            return Alfa,Beta 
+    #caso 4:
+    elif ang_1 < 0.0:
+        if ang_2 < 0.0:
+            Alfa = 90.0 - ang_1
+            Beta = 90.0 + ang_2
+            return Alfa,Beta
+    #Caso 5:
+    elif ang_1 == 0.0:
+        if ang_2 < 0.0:
+            Alfa = 90.0
+            Beta = 90.0 + ang_2
+            return Alfa,Beta
+
+def Distancia_ant_tag(d_entre_ants,Alfa,Beta):
+    """
+    Distancia entre el tag y la antena
+    - Distancia entre ambas antenas
+    - Alfa corresponde al ángulo de la antena 1 
+    - Beta corresponde al ángulo de la antena 2
+    a la salida tendremos dos distancias 
+    """
+
+    alfa, beta = CalculoAngulo(Alfa,Beta)
+
+    # Distancia desde el punto C a A
+    # con a definido como la distancia entre las dos antenas
+    sigma = math.radians(180-beta-alfa)
+    if(sigma!=0):
+        B = d_entre_ants * math.sin(math.radians(alfa))/math.sin(sigma)  # b=a*sin(beta)/sin(sigma)
+        A = d_entre_ants * math.sin(math.radians(beta))/math.sin(sigma) # c=a*sin(alfa)/sin(sigma)
+    else:
+        A = 0
+        B = 0
+    # la altura del triangulo que se forma entre las dos distancias B y C
+    #h = d_entre_ants * (math.sin(math.radians(alfa))*math.sin(math.radians(beta))) / math.sin(math.radians(alfa+beta))
+    return B,A
+
+###-------------------------------------------------------------------------------------------------------------###
+
+def Act_D_ant_tag(vector,valor_actualizar):
+    base_de_datos.update_one({
+        {'_id': ObjectId(vector['_id'])},
+        {
+            'Distancia_ant_tag': valor_actualizar
+        }
+    })
+
+def coordenadas(Latitud_I,Distancia_ant_tag,Longitud_I,angulo_1):
+    Latitud_F = Latitud_I + Distancia_ant_tag * math.sin(math.radians(angulo_1))
+    Longitud_F = Longitud_I + Distancia_ant_tag * math.cos(math.radians(angulo_1))
+    return Latitud_F,Longitud_F
+
+def Act_coordenadas(vector, D_ant_tag, Latitud_I, Longitud_I, angulo_1):
+
+    Latitud_F,Longitud_F = coordenadas(Latitud_I,D_ant_tag,Longitud_I,angulo_1)
+    
+    base_de_datos.update_one({
+        {'_id': ObjectId(vector['_id'])},
+        {
+            'Latitud': Latitud_F,
+            'Longitud': Longitud_F
+        }
+    })

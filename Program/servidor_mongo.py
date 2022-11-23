@@ -39,7 +39,7 @@ class Ublox_3:
         self.Longitud = Longitud
         self.Dato_completo = Dato_completo
 
-def obtener_bd(basedatos='memory_test',coleccion='products'):
+def obtener_bd(basedatos='memory_test',coleccion='data'):
     host = "localhost"
     port = "27017"
     cliente = MongoClient("mongodb://{}:{}".format(host, port))
@@ -47,15 +47,7 @@ def obtener_bd(basedatos='memory_test',coleccion='products'):
     collection = db[coleccion]
     return collection
 
-def obtener_bd_1():
-    host = "localhost"
-    puerto = "27017"
-    user = ""
-    password = ""
-    database = "memory_test"
-    colection = "data"
-    cliente = MongoClient("mongodb://{}:{}@{}:{}".format(user, password, host, puerto))
-    return cliente[database]
+
 
 def insertar(dato):
     base_de_datos = obtener_bd()
