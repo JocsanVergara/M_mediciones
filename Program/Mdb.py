@@ -12,11 +12,9 @@ import utils
 D_ant_tag = 130 
 
 # Leemos el json con los datos de las antenas y el tag
-actual = str(Path('.'))
-print(actual)
-print(Path('.').resolve())
 
-f = open(actual + "Ant_tag.json", "r")
+
+f = open("Ant_tag.json", "r")
 c = f.read()
 f.close()
 js = json.loads(c)
@@ -41,7 +39,7 @@ for r in r_0:
     id_0 = r
 
 
-respuestas = base_de_datos.find().sort("_id",-1).limit(20)
+respuestas = base_de_datos.find().sort("_id",-1)#.limit(500)
 
 # tag_1/Ant_1
 vect_11 = []
@@ -77,7 +75,7 @@ for r in vect_11:
             print("3")
             vect_1.append(r)
             vect_1.append(s)
-            vect_11.remove(s)
+            vect_12.remove(s)
 
 for r in vect_21:
     print("1")
@@ -90,8 +88,13 @@ for r in vect_21:
             vect_22.remove(s)
 
 print("~"*50)
-# print(vect_1[0])
-# print(vect_1[1])
+print(vect_1[0])
+print(vect_1[1])
+print("~"*50)
+print(vect_2[0])
+print(vect_2[1])
+print(vect_1[0]['_id'])
+print(ObjectId(str(vect_1[0]['_id'])))
 # print(vect_1[2])
 # print(vect_1[3])
 # print(vect_1[4])
@@ -105,12 +108,47 @@ print(len(vect_2))
 for t in range(int(len(vect_1)/2)):
     print("~"*50)
     D_B,D_A = utils.Distancia_ant_tag(D_ant_tag,vect_1[2*t]['Ang_azimuth'],vect_1[(2*t)+1]['Ang_azimuth'])
-    utils.Act_D_ant_tag(vect_1[2*t],D_B)
-    utils.Act_D_ant_tag(vect_1[(2*t)+1],D_A)
+    d_a = D_A
+    d_b = D_B
+    base_de_datos.update_one(
+        {"_id": ObjectId(str(vect_1[2*t]['_id']))},
+        {
+            "$set":{
+                "Distancia_ant_tag": d_b
+            }
+        }
+    )
+
+    base_de_datos.update_one(
+        {"_id": ObjectId(vect_1[(2*t)+1]['_id'])},
+        {
+            "$set":{
+                "Distancia_ant_tag": d_a
+            }
+        }
+    )
 
 
 for t in range(int(len(vect_2)/2)):
     print("~"*50)
     D_B,D_A = utils.Distancia_ant_tag(D_ant_tag,vect_2[2*t]['Ang_azimuth'],vect_2[(2*t)+1]['Ang_azimuth'])
-    utils.Act_D_ant_tag(vect_2[2*t],D_B)
-    utils.Act_D_ant_tag(vect_2[(2*t)+1],D_A)
+    
+    base_de_datos.update_one(
+        {'_id': ObjectId(vect_2[2*t]['_id'])},
+        {
+            '$set':{
+                "Distancia_ant_tag": D_B
+            }
+                
+        }
+    )
+    base_de_datos.update_one(
+        {'_id': ObjectId(vect_2[(2*t)+1]['_id'])},
+        {
+            '$set':{
+                "Distancia_ant_tag": D_A
+            }
+        }
+    )
+    #utils.Act_D_ant_tag(base_de_datos,vect_2[2*t]['_id'],D_B)
+    #utils.Act_D_ant_tag(base_de_datos,vect_2[(2*t)+1]['_id'],D_A)

@@ -168,9 +168,9 @@ def Distancia_ant_tag(d_entre_ants,Alfa,Beta):
 
 ###-------------------------------------------------------------------------------------------------------------###
 
-def Act_D_ant_tag(vector,valor_actualizar):
+def Act_D_ant_tag(base_de_datos,vector,valor_actualizar):
     base_de_datos.update_one({
-        {'_id': ObjectId(vector['_id'])},
+        {'_id': ObjectId(vector)},
         {
             'Distancia_ant_tag': valor_actualizar
         }
@@ -186,7 +186,7 @@ def Act_coordenadas(vector, D_ant_tag, Latitud_I, Longitud_I, angulo_1):
     Latitud_F,Longitud_F = coordenadas(Latitud_I,D_ant_tag,Longitud_I,angulo_1)
     
     base_de_datos.update_one({
-        {'_id': ObjectId(vector['_id'])},
+        {'_id': ObjectId(vector)},
         {
             'Latitud': Latitud_F,
             'Longitud': Longitud_F
