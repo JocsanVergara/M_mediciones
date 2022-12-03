@@ -71,7 +71,7 @@ def adquisicion_datos(iteraciones,Antena,Puerto,tag_1,tag_2,Alt_ant):
                     #print("Dato recibido correctamente")
                     #print("RSSI:",RSSI_1p_1," ,A_a:",Azimuth_angle_1," ,A_e:",Elevation_angle_1," ,Canal",Adv_Channel_1, " ,Antena:",Antena," ,tag:",tag_1)
                     enviar_php_datos_ant(time_string,tag_1,Antena,RSSI_1p_1,Azimuth_angle_1,Elevation_angle_1,Adv_Channel_1,Alt_ant)
-                    time.sleep(0.1)
+                    #time.sleep(0.1)
                     contador = contador + 1
                     tag_actual = tag_1
             except: 
@@ -93,7 +93,7 @@ def adquisicion_datos(iteraciones,Antena,Puerto,tag_1,tag_2,Alt_ant):
                     #print("Dato recibido correctamente")
                     #print("RSSI:",RSSI_1p_2," ,A_a:",Azimuth_angle_2," ,A_e:",Elevation_angle_2," ,Canal",Adv_Channel_2, " ,Antena:",Antena," ,tag:",tag_2)
                     enviar_php_datos_ant(time_string,tag_2,Antena,RSSI_1p_2,Azimuth_angle_2,Elevation_angle_2,Adv_Channel_2,Alt_ant)
-                    time.sleep(0.1)
+                    #time.sleep(0.1)
                     contador = contador + 1
                     tag_actual = tag_2
             except: 
@@ -108,8 +108,8 @@ def CalculoAngulo(ang_11,ang_22):
     """
         Calculamos ambos ángulo formado entre las dos antenas y el tag
     """
-    ang_1 = float(ang_11)
-    ang_2 = float(ang_22)
+    ang_1 = ang_11
+    ang_2 = ang_22
 
     Alfa = 0.0
     Beta = 0.0
@@ -142,7 +142,7 @@ def CalculoAngulo(ang_11,ang_22):
             Beta = 90.0 + ang_2
             return Alfa,Beta
 
-def Distancia_ant_tag(d_entre_ants,Alfa,Beta):
+def Distancia_ant_tag(d_entre_ants,Alfa_1,Beta_1):
     """
     Distancia entre el tag y la antena
     - Distancia entre ambas antenas
@@ -151,14 +151,45 @@ def Distancia_ant_tag(d_entre_ants,Alfa,Beta):
     a la salida tendremos dos distancias 
     """
 
-    alfa, beta = CalculoAngulo(Alfa,Beta)
+    #alfa,beta = CalculoAngulo(Alfa,Beta)
+    ang_1 = Alfa_1
+    #print(ang_1)
+    ang_2 = Beta_1
+    #print(ang_2)
+    if ang_1 < 0.0:
+    #Caso 1: Ángulo 1 positivo y Ángulo 2 negativo
+        if ang_2 < 0.0:
+            Alfa = 90.0 + ang_1
+            Beta = 90.0 - ang_2
+        #Caso 2:
+        elif ang_2 > 0.0:
+            Alfa = 90.0 + ang_1
+            Beta = 90.0 - ang_2
+        #Caso 3:    
+        elif ang_2 == 0.0:
+            Alfa = 90.0 + ang_1
+            Beta = 90.0
+    #caso 4:
+    elif ang_1 > 0.0:
+        if ang_2 > 0.0:
+            Alfa = 90.0 + ang_1
+            Beta = 90.0 - ang_2
+    #Caso 5:
+    elif ang_1 == 0.0:
+        if ang_2 < 0.0:
+            Alfa = 90.0
+            Beta = 90.0 + ang_2
+
+
+    alfa = Alfa
+    beta = Beta
 
     # Distancia desde el punto C a A
     # con a definido como la distancia entre las dos antenas
-    sigma = math.radians(180-beta-alfa)
+    sigma = 180-beta-alfa
     if(sigma!=0):
-        B = d_entre_ants * math.sin(math.radians(alfa))/math.sin(sigma)  # b=a*sin(beta)/sin(sigma)
-        A = d_entre_ants * math.sin(math.radians(beta))/math.sin(sigma) # c=a*sin(alfa)/sin(sigma)
+        B = d_entre_ants * math.sin(math.radians(alfa))/math.sin(math.radians(sigma))  # b=a*sin(beta)/sin(sigma)
+        A = d_entre_ants * math.sin(math.radians(beta))/math.sin(math.radians(sigma)) # c=a*sin(alfa)/sin(sigma)
     else:
         A = 0
         B = 0

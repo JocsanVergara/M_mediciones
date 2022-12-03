@@ -4,11 +4,14 @@ import json
 from bson.objectid import ObjectId
 from datetime import datetime, timedelta
 import utils
+import time
+
+import pandas as pd
 
 ## Nota: Una variable importante que de no estar almacenada debe darse de igual manera es la distancia entre la antena y el tag -> debería ser un dato almacenado
 
-## Debe estar en centimetros
-D_ant_tag = 130 
+## Debe estar en centimetros 158
+D_ant_tag = 177 
 
 ## Leemos el json con los datos de las antenas y el tag
 f = open("Ant_tag.json", "r")
@@ -109,12 +112,12 @@ for r in vect_21:
             vect_22.remove(s)
 
 ## Testeo de variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# print("~"*50)
-# print(vect_1[0])
-# print(vect_1[1])
-# print("~"*50)
-# print(vect_2[0])
-# print(vect_2[1])
+print("~"*50)
+print(vect_1[0])
+print(vect_1[1])
+print("~"*50)
+print(vect_2[0])
+print(vect_2[1])
 # print(vect_1[0]['_id'])
 # print(ObjectId(str(vect_1[0]['_id'])))
 # # print(vect_1[2])
@@ -122,8 +125,11 @@ for r in vect_21:
 # # print(vect_1[4])
 # # print(vect_1[5])
 # print("~"*50)
-# print(len(vect_1))
-# print(len(vect_2))
+print(len(vect_1))
+print(len(vect_2))
+print("~"*50)
+print(type(vect_1))
+print(type(vect_2))
 ## ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -131,8 +137,12 @@ for r in vect_21:
 ## Actualizo los datos añadiendo el parametro Distancia_ant_tag para guardarlos en la base de datos de MongoDb
 ## Vector 1
 for t in range(int(len(vect_1)/2)):
-    print("~"*50)
+#for t in range(2):
+    #print("~"*50)
+    #print(type(vect_1[2*t]['Ang_azimuth']))
     D_B,D_A = utils.Distancia_ant_tag(D_ant_tag,vect_1[2*t]['Ang_azimuth'],vect_1[(2*t)+1]['Ang_azimuth'])
+    # print (D_B)
+    # print (D_A)
     d_a = D_A
     d_b = D_B
     base_de_datos.update_one(
@@ -143,7 +153,6 @@ for t in range(int(len(vect_1)/2)):
             }
         }
     )
-
     base_de_datos.update_one(
         {"_id": ObjectId(vect_1[(2*t)+1]['_id'])},
         {
@@ -155,9 +164,11 @@ for t in range(int(len(vect_1)/2)):
 
 ## Vector 2
 for t in range(int(len(vect_2)/2)):
-    print("~"*50)
+#for t in range(2):
+    #print("~"*50)
     D_B,D_A = utils.Distancia_ant_tag(D_ant_tag,vect_2[2*t]['Ang_azimuth'],vect_2[(2*t)+1]['Ang_azimuth'])
-    
+    # print (D_B)
+    # print (D_A)
     base_de_datos.update_one(
         {'_id': ObjectId(vect_2[2*t]['_id'])},
         {
@@ -175,8 +186,50 @@ for t in range(int(len(vect_2)/2)):
             }
         }
     )
+    
 
 # Nota esto podría ser una función pero de momento lo tengo todo junto no más
+
+## Iniciamos la parte de correccion por parte de las redes neuronales
+
+respuestas = base_de_datos.find({"Distancia_ant_tag":{"$exists" : True}}).sort("_id",-1)#.limit(500)
+
+# tag_1/Ant_1
+vect_11 = []
+# tag_2/Ant_1
+vect_21 = []
+# tag_1/Ant_2
+vect_12 = []
+# tag_2/Ant_2
+vect_22 = []
+
+for r in respuestas:
+    if(r['Id_tag']== js["tag_1"] and r['Id_ant']==js["Antena_1"]):
+        vect_11.append(r)
+    elif(r['Id_tag']== js["tag_2"] and r['Id_ant']==js["Antena_1"]):
+        vect_21.append(r)
+    elif(r['Id_tag']== js["tag_1"] and r['Id_ant']==js["Antena_2"]):
+        vect_12.append(r)
+    elif(r['Id_tag']== js["tag_2"] and r['Id_ant']==js["Antena_2"]):
+        vect_22.append(r)
+    else:
+        pass
+
+print("~"*50)
+print(vect_11[0])
+print(vect_11[1])
+print("~"*50)
+print(vect_21[0])
+print(vect_21[1])
+
+
+
+# list_name = ['item_1', 'item_2', 'item_3',...]
+# df = pd.DataFrame (list_name, columns = ['column_name'])
+
+
+df_11 = pd.DataFrame(vect_11)
+print(df_11)
 
 
  #utils.Act_D_ant_tag(base_de_datos,vect_2[2*t]['_id'],D_B)

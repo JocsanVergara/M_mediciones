@@ -26,18 +26,30 @@ tag_2 = js["tag_2"]
 U_Blox = serial.Serial(str(utils.find_port(ant_conexion)),115200) # en windows
 print(U_Blox)
 
+def mide_tiempo(funcion):
+    def funcion_medida(*args, **kwargs):
+        inicio = time.time()
+        c = funcion(*args, **kwargs)
+        print(time.time() - inicio)
+        return c
+    return funcion_medida
+
+
+
 try:
     while True:
         
         segundo_actual = datetime.today().second
-
+        
         if segundo_actual == segundo_siguiente:
-            
+            print(str(time.strftime("%Y/%m/%d/ %H:%M:%S",time.localtime())))
             segundo_siguiente = segundo_siguiente + 1
             print("Entre al if exterior")
             if segundo_siguiente == 60 :
                 segundo_siguiente = 0
+            inicio = time.time()    
             utils.adquisicion_datos(4,ant_dato,U_Blox,tag_1,tag_2,Altura_ant)
+            print(time.time()-inicio)
             print(segundo_actual)
             print(segundo_siguiente)
             
