@@ -47,15 +47,15 @@ c = f.read()
 f.close()
 js = json.loads(c)
 
-#ant_conexion = js["Ant_ubuntu"]
+ant_conexion = js["Ant_ubuntu"]
 ant_dato = js["Antena_1"]
-ant_conexion = ant_dato   # en Windows nos pide el identificador de la antena
+#ant_conexion = ant_dato   # en Windows nos pide el identificador de la antena
 tag_1 = js["tag_1"]
 tag_2 = js["tag_2"]
 tag = tag_1
 # Estableciendo la conexion con el puerto Serial de la antena
-#U_Blox = serial.Serial(ant_conexion,115200)
-U_Blox = serial.Serial(str(find_port(ant_conexion)),115200) # en windows
+U_Blox = serial.Serial(ant_conexion,115200)
+#U_Blox = serial.Serial(str(find_port(ant_conexion)),115200) # en windows
 time_string1 = time.strftime("%Y%m%d_%H%M%S",time.localtime())
 print(time_string1)
 
@@ -108,15 +108,12 @@ while(True):
     except serial.SerialException:
         print("Error en la conexión con el programa")  
 
-print("Estoy fuera")
+#print("Estoy fuera")
 #print(lista_datos)
 
-
-
-indice = ['hora','Id_tag','Id_Ant','RSSI','Ang_azimuth','Ang_elevacion','Canal','Altura_ant(cm)','Distancia_entre_ant_tag(cm)','Error_dato_medido','Distancia_entre_ant']
+#indice = ['hora','Id_tag','Id_Ant','RSSI','Ang_azimuth','Ang_elevacion','Canal','Altura_ant(cm)','Distancia_entre_ant_tag(cm)','Error_dato_medido','Distancia_entre_ant']
 df = pd.DataFrame(lista_datos)
-print(df)
-
+#print(df)
 
 ## Archivo
 archivo = time_string1 + '_' + str(args.Altura_antena) + '_' + str(args.Distancia_ant_tag) + '_' + str(args.Error_dato) + '.csv'
