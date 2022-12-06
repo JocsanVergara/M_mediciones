@@ -188,8 +188,8 @@ def Distancia_ant_tag(d_entre_ants,Alfa_1,Beta_1):
     # con a definido como la distancia entre las dos antenas
     sigma = 180-beta-alfa
     if(sigma!=0):
-        B = d_entre_ants * math.sin(math.radians(alfa))/math.sin(math.radians(sigma))  # b=a*sin(beta)/sin(sigma)
-        A = d_entre_ants * math.sin(math.radians(beta))/math.sin(math.radians(sigma)) # c=a*sin(alfa)/sin(sigma)
+        B = abs(d_entre_ants * math.sin(math.radians(alfa))/math.sin(math.radians(sigma))) # b=a*sin(beta)/sin(sigma)
+        A = abs(d_entre_ants * math.sin(math.radians(beta))/math.sin(math.radians(sigma))) # c=a*sin(alfa)/sin(sigma)
     else:
         A = 0
         B = 0
