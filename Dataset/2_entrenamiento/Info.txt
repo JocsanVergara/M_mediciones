@@ -1,0 +1,2 @@
+En la carpeta entrenamiento estan los datos, el archivo csv con el mismo nombre se puede usar para entrenar la 1era red neuronal
+En la carpeta Entrenamiento_para_LSTM se calcularon las distancias para darselas como entrada a la segunda red

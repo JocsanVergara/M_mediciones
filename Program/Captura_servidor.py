@@ -69,11 +69,9 @@ def adquisicion_datos(iteraciones,Antena,Puerto,tag_1,tag_2,Alt_ant):
             #print("Entre al tag1")
             x1 = line.split(",")
             try: 
-                #Identificador = str(x[0])
                 RSSI_1p_1 = int(x1[1])
                 Azimuth_angle_1 = int(x1[2])
                 Elevation_angle_1 = int(x1[3])
-                #RSSI_2p_1 = int(x1[4])
                 Adv_Channel_1 = str(x1[5])
                 Adv_Channel_1 = int(Adv_Channel_1)
                 
@@ -82,7 +80,6 @@ def adquisicion_datos(iteraciones,Antena,Puerto,tag_1,tag_2,Alt_ant):
                     #print("RSSI:",RSSI_1p_1," ,A_a:",Azimuth_angle_1," ,A_e:",Elevation_angle_1," ,Canal",Adv_Channel_1, " ,Antena:",Antena," ,tag:",tag_1)
                     insertar(Save_data(dato_obtenido,time_string,tag_1,Antena,RSSI_1p_1,Azimuth_angle_1,Elevation_angle_1,Adv_Channel_1,Alt_ant))
                     #enviar_php_datos_ant(time_string,tag_1,Antena,RSSI_1p_1,Azimuth_angle_1,Elevation_angle_1,Adv_Channel_1,Alt_ant)
-                    #time.sleep(0.1)
                     contador = contador + 1
                     tag_actual = tag_1
             except: 
@@ -105,7 +102,6 @@ def adquisicion_datos(iteraciones,Antena,Puerto,tag_1,tag_2,Alt_ant):
                     #print("RSSI:",RSSI_1p_2," ,A_a:",Azimuth_angle_2," ,A_e:",Elevation_angle_2," ,Canal",Adv_Channel_2, " ,Antena:",Antena," ,tag:",tag_2)
                     #enviar_php_datos_ant(time_string,tag_2,Antena,RSSI_1p_2,Azimuth_angle_2,Elevation_angle_2,Adv_Channel_2,Alt_ant)
                     insertar(Save_data(dato_obtenido,time_string,tag_2,Antena,RSSI_1p_2,Azimuth_angle_2,Elevation_angle_2,Adv_Channel_2,Alt_ant))
-                    #time.sleep(0.1)
                     contador = contador + 1
                     tag_actual = tag_2
             except: 
@@ -113,8 +109,6 @@ def adquisicion_datos(iteraciones,Antena,Puerto,tag_1,tag_2,Alt_ant):
         
         else:
             print("Dato recibido de forma incorrecta")
-
-
 
 # Inicializando las variables
 Altura_ant = 134        ## Esta debe estar en cm

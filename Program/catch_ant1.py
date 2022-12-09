@@ -28,13 +28,11 @@ print(U_Blox)
 
 try:
     while True:
-        #print("Entre al while exterior")
         segundo_actual = datetime.today().second
 
         if segundo_actual == segundo_siguiente:
             
             segundo_siguiente = segundo_siguiente + 1
-            #print("Entre al if exterior")
             if segundo_siguiente == 60 :
                 segundo_siguiente = 0
             utils.adquisicion_datos(4,ant_dato,U_Blox,tag_1,tag_2,Altura_ant)

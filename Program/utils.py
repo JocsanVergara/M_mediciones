@@ -111,8 +111,6 @@ def CalculoAngulo(ang_11,ang_22):
     ang_1 = ang_11
     ang_2 = ang_22
 
-    global Alfa
-    global Beta 
     if ang_1 < 0.0:   ## Correccion 98/12/2022
         if ang_2 < 0.0:
             Alfa = 90.0 + ang_1
@@ -150,39 +148,6 @@ def Distancia_ant_tag(d_entre_ants,Alfa_1,Beta_1):
     - Beta corresponde al ángulo de la antena 2
     a la salida tendremos dos distancias 
     """
-    # Alfa = 0.0
-    # Beta = 0.0
-    # #alfa,beta = CalculoAngulo(Alfa,Beta)
-    # ang_1 = Alfa_1
-    # #print(ang_1)
-    # ang_2 = Beta_1
-    # #print(ang_2)
-    # if ang_1 < 0.0:
-    # #Caso 1: Ángulo 1 positivo y Ángulo 2 negativo
-    #     if ang_2 < 0.0:
-    #         Alfa = 90.0 + ang_1
-    #         Beta = 90.0 - ang_2
-    #     #Caso 2:
-    #     elif ang_2 > 0.0:
-    #         Alfa = 90.0 + ang_1
-    #         Beta = 90.0 - ang_2
-    #     #Caso 3:    
-    #     elif ang_2 == 0.0:
-    #         Alfa = 90.0 + ang_1
-    #         Beta = 90.0
-    # #caso 4:
-    # elif ang_1 > 0.0:
-    #     if ang_2 > 0.0:
-    #         Alfa = 90.0 + ang_1
-    #         Beta = 90.0 - ang_2
-    # #Caso 5:
-    # elif ang_1 == 0.0:
-    #     if ang_2 < 0.0:
-    #         Alfa = 90.0
-    #         Beta = 90.0 + ang_2
-    # alfa = Alfa
-    # beta = Beta
-    
     alfa,beta = CalculoAngulo(Alfa_1,Beta_1)
 
     # Distancia desde el punto C a A

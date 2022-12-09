@@ -49,39 +49,39 @@ def obtener_bd(basedatos='memory_test',coleccion='data'):
 
 
 
-def insertar(dato):
-    base_de_datos = obtener_bd()
-    dato = base_de_datos.data
-    return dato.insert_one({
-        "nombre": dato.nombre,
-        "precio": dato.precio,
-        "cantidad": dato.cantidad,
-        }).inserted_id
+# def insertar(dato):
+#     base_de_datos = obtener_bd()
+#     dato = base_de_datos.data
+#     return dato.insert_one({
+#         "nombre": dato.nombre,
+#         "precio": dato.precio,
+#         "cantidad": dato.cantidad,
+#         }).inserted_id
 
-def obtener():
-    base_de_datos = obtener_bd()
-    return base_de_datos.datos.find()
+# def obtener():
+#     base_de_datos = obtener_bd()
+#     return base_de_datos.datos.find()
 
-def actualizar(id, dato):
-    base_de_datos = obtener_bd()
-    resultado = base_de_datos.dato.update_one(
-        {
-        '_id': ObjectId(id)
-        }, 
-        {
-            '$set': {
-                "nombre": dato.nombre,
-                "precio": dato.precio,
-                "cantidad": dato.cantidad,
-            }
-        })
-    return resultado.modified_count
+# def actualizar(id, dato):
+#     base_de_datos = obtener_bd()
+#     resultado = base_de_datos.dato.update_one(
+#         {
+#         '_id': ObjectId(id)
+#         }, 
+#         {
+#             '$set': {
+#                 "nombre": dato.nombre,
+#                 "precio": dato.precio,
+#                 "cantidad": dato.cantidad,
+#             }
+#         })
+#     return resultado.modified_count
 
-def eliminar(id):
-    base_de_datos = obtener_bd()
-    resultado = base_de_datos.dato.delete_one(
-        {
-        '_id': ObjectId(id)
-        })
-    return resultado.deleted_count
+# def eliminar(id):
+#     base_de_datos = obtener_bd()
+#     resultado = base_de_datos.dato.delete_one(
+#         {
+#         '_id': ObjectId(id)
+#         })
+#     return resultado.deleted_count
 

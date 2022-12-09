@@ -20,23 +20,14 @@ def find_port(identf):
 
 ## Para entregarle los argumento desde linea de comando
 parser = argparse.ArgumentParser()
-
 parser.add_argument("Punto_captura",type=int,help="Corresponde al punto donde fue tomada la muestra")
 parser.add_argument("Altura_antena",type=int,help="Altura de la antena que estamos recogiendo el dato")
 parser.add_argument("Distancia_entre_antenas",type=int,help="Distancia lineal entre ambas antenas")
 parser.add_argument("Error_dato",type=int,help="Existe libre vision entre el objetivo y la antena,")
 parser.add_argument("Distancia_ant_tag",type=int,help="Distancia lineal entre la antena y el tag")
-
 args = parser.parse_args()
 
-print(args.Punto_captura)
-print(args.Altura_antena)
-print(args.Distancia_entre_antenas)
-print(args.Error_dato)
-print(args.Distancia_ant_tag)
-
 ## Control de los dos minutos de captura de datos
-
 time2 = datetime.now() + timedelta(minutes=1)
 #time2 = datetime.now() + timedelta(seconds=10)
 
@@ -53,6 +44,7 @@ ant_dato = js["Antena_1"]
 tag_1 = js["tag_1"]
 tag_2 = js["tag_2"]
 tag = tag_1
+
 # Estableciendo la conexion con el puerto Serial de la antena
 U_Blox = serial.Serial(ant_conexion,115200)
 #U_Blox = serial.Serial(str(find_port(ant_conexion)),115200) # en windows
@@ -108,12 +100,7 @@ while(True):
     except serial.SerialException:
         print("Error en la conexión con el programa")  
 
-#print("Estoy fuera")
-#print(lista_datos)
-
-#indice = ['hora','Id_tag','Id_Ant','RSSI','Ang_azimuth','Ang_elevacion','Canal','Altura_ant(cm)','Distancia_entre_ant_tag(cm)','Error_dato_medido','Distancia_entre_ant']
 df = pd.DataFrame(lista_datos)
-#print(df)
 
 ## Archivo
 archivo = time_string1 + '_' + str(args.Altura_antena) + '_' + str(args.Distancia_ant_tag) + '_' + str(args.Error_dato) + '.csv'
